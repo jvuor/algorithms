@@ -1,0 +1,16 @@
+{
+  "name": "sort",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sort.js",
+  "dependencies": {
+    "jest": "^23.4.2",
+    "pretty-hrtime": "^1.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}
