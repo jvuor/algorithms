@@ -1,71 +1,45 @@
+const sort = require('./sort')
 const insertionSort = require('./insertionSort')
-const builtInSort = require('./builtinSort')
+const builtinSort = require('./builtinSort')
+jest.mock('./insertionSort')
+jest.mock('./builtinSort')
 
-randomArray = (array) => {
-  let result = []
-  for (let i = 0; i < 10000; i++) {
-    result[i] = Math.random() * 10000
-  }
-
-  return result
-}
-
-const checkSortedArray = (array) => {
-  let result = true
-    
-  for (let i = 1; i < array.length; i++) {
-    if (array[i-1] > array[i]) {
-      result = false
-    }
-  }
-
-  return result
-}
-
-describe('Check test logic', () => {
-  let testUnsorted
-  let testSorted
-
-  beforeEach(() => {
-    testUnsorted = [4, 2, 3, 1]
-    testSorted = [1, 2, 3, 4]
+describe('testing the algoritm test platform', () => {
+  test('countTime returns correct time since last call', done => {
+    const initialTime = sort.countTime()
+    setTimeout(() => {
+      const nextTime = sort.countTime()
+      expect(nextTime).toBe('1 s')
+      done()
+    }, 1000)
   })
 
-  test('checkSortedArray works', () => {
-    expect(checkSortedArray(testSorted) === true)
-    expect(checkSortedArray(testUnsorted) === false)
+  test('createArray creates an array of desired length', () => {
+    const array1 = sort.createArray(5)
+    expect(array1.length).toBe(5)
+    const array2 = sort.createArray(7786)
+    expect(array2.length).toBe(7786)
   })
 
-  test('insertionSort works', () => {
-    expect(insertionSort(testUnsorted) === testSorted)
+  test('createArray elements are numbers', () => {
+    const array = sort.createArray(100)
+    array.forEach((element) => {
+      expect(typeof element).toBe('number')
+      expect(element > 0).toBe(true)
+      expect(element < 10000).toBe(true)
+    })
   })
 
-  test('JS sort function wrapper works', () => {
-    expect(builtInSort(testUnsorted) === testSorted)
-  })
-})
+  test('runTest calls the correct algorithms with expected arrays', () => {
+    sort.runTest(5)
+    expect(insertionSort).toBeCalled()
+    const calledArray = insertionSort.mock.calls[0][0]
+    expect(calledArray.length).toBe(5)
+    expect(typeof calledArray[0]).toBe('number')
 
-describe('sort tests', () => {
-  let testArray
-  
-  beforeEach(() => {
-    testArray = randomArray()
-  })
-
-  test('test array is not sorted before tests', () => {
-    const result = checkSortedArray(testArray)
-    expect(!result)
-  })
-  test('insertionSort works', () => {
-    const sortedArray = insertionSort(testArray)
-    const result = checkSortedArray(sortedArray)
-
-    expect(result)
-  })
-  test('JS sort function wrapper works', () => {
-    const sortedArray = builtInSort(testArray)
-    const result = checkSortedArray(sortedArray)
-
-    expect(result)
+    expect(builtinSort).toBeCalled()
+    const calledArray2 = builtinSort.mock.calls[0][0]
+    expect(calledArray2.length).toBe(5)
+    expect(typeof calledArray2[0]).toBe('number')
   })
 })

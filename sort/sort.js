@@ -29,6 +29,4 @@ const runTest = (len) => {
   console.log('\n\nResults, '+ len +' elements\n-----------------\nInsertion sort:\t\t'+insertionResult+'\nJS .sort function:\t'+builtInResult)
 }
 
-runTest(10)
-runTest(1000)
-runTest(100000)
+module.exports = { countTime, createArray, runTest }
