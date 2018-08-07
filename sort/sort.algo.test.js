@@ -2,6 +2,8 @@ const insertionSort = require('./insertionSort')
 const builtInSort = require('./builtinSort')
 
 randomArray = (array) => {
+  // creates a random array for testing purposes.
+  // could use sort.createArray instead
   let result = []
   for (let i = 0; i < 10000; i++) {
     result[i] = Math.random() * 10000
@@ -11,6 +13,7 @@ randomArray = (array) => {
 }
 
 const checkSortedArray = (array) => {
+  // checks that the array has been sorted, returns a boolean
   let result = true
     
   for (let i = 1; i < array.length; i++) {
@@ -23,6 +26,9 @@ const checkSortedArray = (array) => {
 }
 
 describe('Check test logic', () => {
+  // checking that the basic assumptions in our tests are correct:
+  // -checkSortedArray does what it's supposed to do,
+  // -sorting algorithms actually return sorted results
   let testUnsorted
   let testSorted
 
@@ -46,13 +52,14 @@ describe('Check test logic', () => {
 })
 
 describe('sort tests', () => {
+  // tests with a realistic array
   let testArray
   
   beforeEach(() => {
     testArray = randomArray()
   })
 
-  test('test array is not sorted before tests', () => {
+  test('test array is not sorted by default', () => {
     const result = checkSortedArray(testArray)
     expect(result).toBe(false)
   })

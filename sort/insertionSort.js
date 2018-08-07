@@ -1,3 +1,5 @@
+// Insertion sorting algorithm from ItA page 18
+
 const insertionSort = (array) => {
   var len
   try {
