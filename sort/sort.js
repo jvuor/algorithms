@@ -1,6 +1,7 @@
 var prettyTime = require('pretty-hrtime')
 const insertionSort = require('./insertionSort')
 const builtInSort = require('./builtinSort')
+const { mergeSort } = require('./mergeSort')
 
 var time = process.hrtime()
 
@@ -27,10 +28,14 @@ const runTest = (len) => {
   countTime()
   insertionSort(createArray(len))
   const insertionResult = countTime()
+  mergeSort(createArray(len))
+  const mergeResult = countTime()
   builtInSort(createArray(len))
   const builtInResult = countTime()
 
-  console.log('\n\nResults, '+ len +' elements\n-----------------\nInsertion sort:\t\t'+insertionResult+'\nJS .sort function:\t'+builtInResult)
+  console.log('\n\nResults, ' + len + ' elements\n-----------------\nInsertion sort:\t\t' + insertionResult +
+  '\nMerge sort:\t\t'+ mergeResult +
+  '\nJS .sort function:\t' + builtInResult)
 }
 
 module.exports = { countTime, createArray, runTest }

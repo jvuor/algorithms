@@ -4,7 +4,7 @@ const builtinSort = require('./builtinSort')
 jest.mock('./insertionSort')
 jest.mock('./builtinSort')
 
-describe('testing the algoritm test platform', () => {
+describe('testing the algorithm test platform', () => {
   test('countTime returns correct time since last call', done => {
     const initialTime = sort.countTime()
     setTimeout(() => {
@@ -25,7 +25,7 @@ describe('testing the algoritm test platform', () => {
     const array = sort.createArray(100)
     array.forEach((element) => {
       expect(typeof element).toBe('number')
-      expect(element > 0).toBe(true)
+      expect(element >= 0).toBe(true)
       expect(element < 10000).toBe(true)
     })
   })
