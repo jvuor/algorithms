@@ -1,7 +1,7 @@
 var prettyTime = require('pretty-hrtime')
 const insertionSort = require('./insertionSort')
 const builtInSort = require('./builtinSort')
-const { mergeSort } = require('./mergeSort')
+const mergeSort = require('./mergeSort')
 
 var time = process.hrtime()
 

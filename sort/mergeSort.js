@@ -42,6 +42,7 @@ function mergeSortfn(array, start, end) {
 function mergeSort(array) {
   //wrapper for the mergesort functions
   mergeSortfn(array, 0, array.length - 1)
+  return array
 }
 
-module.exports = { mergeSort, mergeSortfn, merge }
+module.exports = mergeSort

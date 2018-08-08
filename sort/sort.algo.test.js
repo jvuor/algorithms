@@ -1,6 +1,6 @@
 const insertionSort = require('./insertionSort')
 const builtInSort = require('./builtinSort')
-const { mergeSort } = require('./mergeSort')
+const mergeSort = require('./mergeSort')
 
 randomArray = (array) => {
   // creates a random array for testing purposes.
@@ -52,8 +52,7 @@ describe('Check test logic', () => {
   })
 
   test('mergeSort works', () => {
-    mergeSort(testUnsorted)
-    expect(testUnsorted).toEqual(testSorted)
+    expect(mergeSort(testUnsorted)).toEqual(testSorted)
   })
 })
 
@@ -83,8 +82,8 @@ describe('sort tests', () => {
   })
 
   test('merge sort works', () => {
-    mergeSort(testArray)
-    const result = checkSortedArray(testArray)
+    const sortedArray = mergeSort(testArray)
+    const result = checkSortedArray(sortedArray)
 
     expect(result).toBe(true)
   })

@@ -9,7 +9,7 @@ describe('testing the algorithm test platform', () => {
     const initialTime = sort.countTime()
     setTimeout(() => {
       const nextTime = sort.countTime()
-      expect(nextTime).toBe('1 s')
+      expect(nextTime).toMatch(/^1.?0?[0-9]? s/)  // matches '1 s', '1.0? s', '1.1 s'
       done()
     }, 1000)
   })
