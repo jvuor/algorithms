@@ -126,4 +126,4 @@ const prettyPrint = (results) => {
 
 }
 
-module.exports = { countTime, createArray, runTest }
+module.exports = { countTime, createArray, runTest, minArrayIndex, prettyWrap, prettyPrint }

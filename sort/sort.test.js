@@ -9,7 +9,7 @@ describe('testing the algorithm test platform', () => {
     const initialTime = sort.countTime()
     setTimeout(() => {
       const nextTime = sort.countTime()
-      expect(nextTime).toMatch(/^1.?0?[0-9]? s/)  // matches '1 s', '1.0? s', '1.1 s'
+      expect(nextTime[0] === 1).toBe(true)
       done()
     }, 1000)
   })
@@ -41,5 +41,11 @@ describe('testing the algorithm test platform', () => {
     const calledArray2 = builtinSort.mock.calls[0][0]
     expect(calledArray2.length).toBe(5)
     expect(typeof calledArray2[0]).toBe('number')
+  })
+
+  test('minArrayIndex returns the correct index', () => {
+    const testArray1 = [[0, 99], [3, 0], [1, 99], [0, 80], [-3, 81]]
+    const result = sort.minArrayIndex(testArray1)
+    expect(result).toBe(4)
   })
 })
