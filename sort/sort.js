@@ -23,6 +23,28 @@ const createArray = (len) => {
   return newArray
 }
 
+const minArrayIndex = (array) => {
+  // finds the index of the shortest time in an array of hrtime tuples
+  // returns the index as a number
+  let minIndex = null
+  let minResult = [+Infinity, +Infinity]
+
+  for (let i = 0; i < array.length; i++) {
+    if (array[i][0] < minResult[0] || (array[i][0] === minResult[0] && array[i][1] < minResult[1])) {
+      minResult = array[i]
+      minIndex = i
+    }
+  }
+
+  if( minIndex === null ) {
+    // no error handling - this is hardly a critical error in itself,
+    // but obviously something has gone wrong somewhere else
+    throw 'Error in minArrayIndex'
+  } else {
+    return minIndex
+  }
+}
+
 const runTest = (len) => {
   // tests the different sorting algorithms and prints out the result
   countTime()
@@ -41,40 +63,43 @@ const prettyPrint = (results) => {
   //
   //the print is pretty, the code isn't
 
-  let minIndex = null
-  let minResult = [+Infinity, +Infinity]
+  //to add support for more algorithms, just update these two arrays
   const resultArray = [results.insertionResult, results.mergeResult, results.builtInResult]
+  const algoNames = ['Insertion sort', 'Merge sort', 'JS Array.prototype.sort()']
 
-  for (let i = 0; i < resultArray.length; i++) {
-    if (resultArray[i][0] < minResult[0] || (resultArray[i][0] === minResult[0] && resultArray[i][1] < minResult[1])) {
-      minResult = resultArray[i]
-      minIndex = i
-    }
-  }
+  //finding the fastest time so it can be highlighted in the results
 
-  if( minIndex === null ) { throw 'Error with printing results' }
+  const minIndex = minArrayIndex(resultArray)
+
+  // short guide to pretty printed console text:
+  //
+  // \x1b - escapes the following style code
+  //
+  // style codes used here:
+  // [0m - reset styles
+  // [4m - underlined
+  // [36m - text color: cyan
+  // [32m - text color: green
 
   process.stdout.write('\x1b[4m\x1b[36mResults for an array with ' + results.len +' elements\x1b[0m\n\n')
   
-  process.stdout.write('Insertion sort\t\t')
-  minIndex === 0?
-  process.stdout.write('\x1b[32m' + prettyTime(results.insertionResult) + '\x1b[0m') :
-  process.stdout.write(prettyTime(results.insertionResult))
+  // loop writes the result line for each algorithm
+  for (let i = 0; i < resultArray.length; i++) {
+    process.stdout.write(algoNames[i])
+
+    // this part makes the columns stay vertically aligned despite different algo name lengths.
+    const TAB_LENGTH_IN_CONSOLE = 8
+    const columnWidth = 4   // width in tab lengths, TODO: make this dynamic
+    for (let j = 0; j < columnWidth- (algoNames[i].length / TAB_LENGTH_IN_CONSOLE); j++) { process.stdout.write('\t') }
+
+    minIndex === i?   // if this is the fastest result, highlight it in green
+    process.stdout.write('\x1b[32m' + prettyTime(resultArray[i]) + '\x1b[0m') :
+    process.stdout.write(prettyTime(resultArray[i]))
+    process.stdout.write('\n')
+  }
+
   process.stdout.write('\n')
 
-  process.stdout.write('Merge sort\t\t')
-  minIndex === 1?
-  process.stdout.write('\x1b[32m' + prettyTime(results.mergeResult) + '\x1b[0m') :
-  process.stdout.write(prettyTime(results.mergeResult))
-  process.stdout.write('\n')
-
-  process.stdout.write('JS Array.sort()\t\t')
-  minIndex === 2?
-  process.stdout.write('\x1b[32m' + prettyTime(results.builtInResult) + '\x1b[0m') :
-  process.stdout.write(prettyTime(results.builtInResult))
-  process.stdout.write('\n')
-
-  console.log('\n')
 }
 
 module.exports = { countTime, createArray, runTest }
