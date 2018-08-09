@@ -50,12 +50,12 @@ const runTest = (len) => {
   countTime()
   var insertionResult = []
   // only use insertion sort in the shorter tests, it takes way too long otherwise
-  if( len <= 100000 ) {
-    insertionSort(createArray(len))
-    insertionResult = countTime()
-  } else {
+  const result = insertionSort(createArray(len))
+  result ?
+    insertionResult = countTime() :
     insertionResult = [+Infinity, +Infinity]
-  }
+  countTime()
+
   mergeSort(createArray(len))
   const mergeResult = countTime()
   builtInSort(createArray(len))
