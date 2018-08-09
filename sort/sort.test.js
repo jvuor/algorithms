@@ -1,8 +1,10 @@
 const sort = require('./sort')
 const insertionSort = require('./insertionSort')
 const builtinSort = require('./builtinSort')
+const mergeSort = require('./mergeSort')
 jest.mock('./insertionSort')
 jest.mock('./builtinSort')
+jest.mock('./mergeSort')
 
 describe('testing the algorithm test platform', () => {
   test('countTime returns correct time since last call', done => {
@@ -31,16 +33,23 @@ describe('testing the algorithm test platform', () => {
   })
 
   test('runTest calls the correct algorithms with expected arrays', () => {
-    sort.runTest(5)
-    expect(insertionSort).toBeCalled()
-    const calledArray = insertionSort.mock.calls[0][0]
-    expect(calledArray.length).toBe(5)
-    expect(typeof calledArray[0]).toBe('number')
 
-    expect(builtinSort).toBeCalled()
-    const calledArray2 = builtinSort.mock.calls[0][0]
-    expect(calledArray2.length).toBe(5)
-    expect(typeof calledArray2[0]).toBe('number')
+    const testLength = 5
+    sort.runTest(testLength)
+
+    const mockFunctions = [ insertionSort, mergeSort, builtinSort ]
+
+    mockFunctions.forEach( mockFunction => {
+      //check that the mock function has been called exactly once
+      expect(mockFunction.mock.calls.length).toBe(1)
+
+      //check that the array that was sent to the function is correct
+      const calledArray = mockFunction.mock.calls[0][0]
+      expect(calledArray.length).toBe(testLength)
+      for (let i = 0; i < testLength; i++) {
+        expect(typeof calledArray[i]).toBe('number')
+      }
+    })
   })
 
   test('minArrayIndex returns the correct index', () => {
