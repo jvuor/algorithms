@@ -48,8 +48,14 @@ const minArrayIndex = (array) => {
 const runTest = (len) => {
   // tests the different sorting algorithms and prints out the result
   countTime()
-  insertionSort(createArray(len))
-  const insertionResult = countTime()
+  var insertionResult = []
+  // only use insertion sort in the shorter tests, it takes way too long otherwise
+  if( len <= 100000 ) {
+    insertionSort(createArray(len))
+    insertionResult = countTime()
+  } else {
+    insertionResult = [+Infinity, +Infinity]
+  }
   mergeSort(createArray(len))
   const mergeResult = countTime()
   builtInSort(createArray(len))
@@ -95,6 +101,15 @@ const prettyWrap = (string, style) => {
   return wrappedStr
 }
 
+const printTime = (time) => {
+  //wrapper for prettyTime with handler for invalid results
+  if (time[0] === +Infinity) {
+    return 'N/A'
+  } else {
+    return prettyTime(time)
+  }
+}
+
 const prettyPrint = (results) => {
   //outputs the results into console
 
@@ -117,8 +132,8 @@ const prettyPrint = (results) => {
     for (let j = 0; j < columnWidth- (algoNames[i].length / TAB_LENGTH_IN_CONSOLE); j++) { process.stdout.write('\t') }
 
     minIndex === i?   // if this is the fastest result, highlight it
-    process.stdout.write(prettyWrap(prettyTime(resultArray[i]), 'highlight')) :
-    process.stdout.write(prettyTime(resultArray[i]))
+    process.stdout.write(prettyWrap(printTime(resultArray[i]), 'highlight')) :
+    process.stdout.write(printTime(resultArray[i]))
     process.stdout.write('\n')
   }
 
@@ -126,4 +141,5 @@ const prettyPrint = (results) => {
 
 }
 
+// exporting all the helper functions for tests
 module.exports = { countTime, createArray, runTest, minArrayIndex, prettyWrap, prettyPrint }
