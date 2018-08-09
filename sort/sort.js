@@ -58,20 +58,13 @@ const runTest = (len) => {
   prettyPrint({ len, insertionResult, mergeResult, builtInResult })
 }
 
-const prettyPrint = (results) => {
-  //outputs the results into console
-  //
-  //the print is pretty, the code isn't
+const prettyWrap = (string, style) => {
+  // wraps a string with the console style codes
+  // supported styles:
+  // 'header' - cyan, underlined
+  // 'highlight' - green
 
-  //to add support for more algorithms, just update these two arrays
-  const resultArray = [results.insertionResult, results.mergeResult, results.builtInResult]
-  const algoNames = ['Insertion sort', 'Merge sort', 'JS Array.prototype.sort()']
-
-  //finding the fastest time so it can be highlighted in the results
-
-  const minIndex = minArrayIndex(resultArray)
-
-  // short guide to pretty printed console text:
+  // short guide to styling console text:
   //
   // \x1b - escapes the following style code
   //
@@ -80,8 +73,39 @@ const prettyPrint = (results) => {
   // [4m - underlined
   // [36m - text color: cyan
   // [32m - text color: green
+  //
+  // http://voidcanvas.com/make-console-log-output-colorful-and-stylish-in-browser-node/
 
-  process.stdout.write('\x1b[4m\x1b[36mResults for an array with ' + results.len +' elements\x1b[0m\n\n')
+  var wrappedStr = '\x1b'
+
+  switch (style) {
+    case 'header':
+      wrappedStr = wrappedStr + '[4m\x1b[36m'
+      break
+    case 'highlight':
+      wrappedStr = wrappedStr + '[32m'
+      break
+    default:
+      console.error('error in PrettyWrap: unknown style ', style)
+      return string   // exiting with no styling attached
+  }
+
+  wrappedStr = wrappedStr + string + '\x1b[0m'
+
+  return wrappedStr
+}
+
+const prettyPrint = (results) => {
+  //outputs the results into console
+
+  //to add support for more algorithms, just update these two arrays
+  const resultArray = [results.insertionResult, results.mergeResult, results.builtInResult]
+  const algoNames = ['Insertion sort', 'Merge sort', 'JS Array.prototype.sort()']
+
+  //finding the fastest time so it can be highlighted in the results
+  const minIndex = minArrayIndex(resultArray)
+
+  process.stdout.write(prettyWrap('Results for an array with ' + results.len +' elements\n\n', 'header'))
   
   // loop writes the result line for each algorithm
   for (let i = 0; i < resultArray.length; i++) {
@@ -92,8 +116,8 @@ const prettyPrint = (results) => {
     const columnWidth = 4   // width in tab lengths, TODO: make this dynamic
     for (let j = 0; j < columnWidth- (algoNames[i].length / TAB_LENGTH_IN_CONSOLE); j++) { process.stdout.write('\t') }
 
-    minIndex === i?   // if this is the fastest result, highlight it in green
-    process.stdout.write('\x1b[32m' + prettyTime(resultArray[i]) + '\x1b[0m') :
+    minIndex === i?   // if this is the fastest result, highlight it
+    process.stdout.write(prettyWrap(prettyTime(resultArray[i]), 'highlight')) :
     process.stdout.write(prettyTime(resultArray[i]))
     process.stdout.write('\n')
   }
