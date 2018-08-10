@@ -1,20 +1,20 @@
-var prettyTime = require('pretty-hrtime')
+const prettyTime = require('pretty-hrtime')
 const insertionSort = require('./insertionSort')
 const builtInSort = require('./builtinSort')
 const mergeSort = require('./mergeSort')
 
-var time = process.hrtime()
+let time = process.hrtime()
 
 const countTime = () => {
   // counts time from the last time the function was called
   // returns the result as a tuple of [seconds, decimals]
-  result = process.hrtime(time)
+  const result = process.hrtime(time)
   time = process.hrtime()
   return result
 }
 
 const createArray = (len) => {
-  // cretes an array of desired lenght, filled with random numbers
+  // creates an array of desired length, filled with random numbers
   let newArray = []
   for (let i = 0; i < len; i++) {
     newArray[i] = Math.random() * 10000
@@ -48,8 +48,8 @@ const minArrayIndex = (array) => {
 const runTest = (len) => {
   // tests the different sorting algorithms and prints out the result
   countTime()
-  var insertionResult = []
-  // only use insertion sort in the shorter tests, it takes way too long otherwise
+  let insertionResult = []
+  // check if insertion sort timed out or finished normally
   const result = insertionSort(createArray(len))
   result ?
     insertionResult = countTime() :
@@ -82,7 +82,7 @@ const prettyWrap = (string, style) => {
   //
   // http://voidcanvas.com/make-console-log-output-colorful-and-stylish-in-browser-node/
 
-  var wrappedStr = '\x1b'
+  let wrappedStr = '\x1b'
 
   switch (style) {
     case 'header':

@@ -32,7 +32,7 @@ function merge(array, start, mid, end) {
 
 function mergeSortfn(array, start, end) {
   if (start < end) {
-    var mid = Math.floor((start + end) / 2)
+    let mid = Math.floor((start + end) / 2)
     mergeSortfn(array, start, mid)
     mergeSortfn(array, mid + 1, end)
     merge(array, start, mid, end)

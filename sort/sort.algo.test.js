@@ -2,15 +2,15 @@ const insertionSort = require('./insertionSort')
 const builtInSort = require('./builtinSort')
 const mergeSort = require('./mergeSort')
 
-randomArray = (array) => {
+randomArray = () => {
   // creates a random array for testing purposes.
   // could use sort.createArray instead
-  let result = []
+  let newArray = []
   for (let i = 0; i < 10000; i++) {
-    result[i] = Math.random() * 10000
+    newArray[i] = Math.random() * 10000
   }
 
-  return result
+  return newArray
 }
 
 const checkSortedArray = (array) => {
