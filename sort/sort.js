@@ -2,6 +2,7 @@ const prettyTime = require('pretty-hrtime')
 const insertionSort = require('./insertionSort')
 const builtInSort = require('./builtinSort')
 const mergeSort = require('./mergeSort')
+const mergeInsertionSort = require('./mergeInsert')
 
 let time = process.hrtime()
 
@@ -58,10 +59,12 @@ const runTest = (len) => {
 
   mergeSort(createArray(len))
   const mergeResult = countTime()
+  mergeInsertionSort(createArray(len))
+  const mergeInsertionResult = countTime()
   builtInSort(createArray(len))
   const builtInResult = countTime()
 
-  prettyPrint({ len, insertionResult, mergeResult, builtInResult })
+  prettyPrint({ len, insertionResult, mergeResult, mergeInsertionResult, builtInResult })
 }
 
 const prettyWrap = (string, style) => {
@@ -114,8 +117,8 @@ const prettyPrint = (results) => {
   //outputs the results into console
 
   //to add support for more algorithms, just update these two arrays
-  const resultArray = [results.insertionResult, results.mergeResult, results.builtInResult]
-  const algoNames = ['Insertion sort', 'Merge sort', 'JS Array.prototype.sort()']
+  const resultArray = [results.insertionResult, results.mergeResult, results.mergeInsertionResult, results.builtInResult]
+  const algoNames = ['Insertion sort', 'Merge sort', 'Merge/insertion sort', 'JS Array.prototype.sort()']
 
   //finding the fastest time so it can be highlighted in the results
   const minIndex = minArrayIndex(resultArray)
