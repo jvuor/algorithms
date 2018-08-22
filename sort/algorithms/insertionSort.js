@@ -11,7 +11,7 @@ const insertionSort = (array) => {
   }
 
   for (let i = 1; i < len; i++) {
-    if(process.hrtime(startTime)[0] >= 15) {
+    if (process.hrtime(startTime)[0] >= 15) {
       // times out after 15 seconds
       // this check increases the algorithm run time, but not massively
       return false

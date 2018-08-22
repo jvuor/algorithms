@@ -1,6 +1,6 @@
-//merge sort algorithm from ItA pages 31-34
+// merge sort algorithm from ItA pages 31-34
 
-function merge(array, start, mid, end) {
+function merge (array, start, mid, end) {
   const subArray1Len = mid - start + 1
   const subArray2Len = end - mid
   let subArray1 = []
@@ -30,7 +30,7 @@ function merge(array, start, mid, end) {
   }
 }
 
-function mergeSortfn(array, start, end) {
+function mergeSortfn (array, start, end) {
   if (start < end) {
     let mid = Math.floor((start + end) / 2)
     mergeSortfn(array, start, mid)
@@ -39,8 +39,8 @@ function mergeSortfn(array, start, end) {
   }
 }
 
-function mergeSort(array) {
-  //wrapper for the mergesort functions
+function mergeSort (array) {
+  // wrapper for the mergesort functions
   mergeSortfn(array, 0, array.length - 1)
   return array
 }

@@ -1,30 +1,7 @@
-const insertionSort = require('./insertionSort')
-const builtInSort = require('./builtinSort')
-const mergeSort = require('./mergeSort')
-
-randomArray = () => {
-  // creates a random array for testing purposes.
-  // could use sort.createArray instead
-  let newArray = []
-  for (let i = 0; i < 10000; i++) {
-    newArray[i] = Math.random() * 10000
-  }
-
-  return newArray
-}
-
-const checkSortedArray = (array) => {
-  // checks that the array has been sorted, returns a boolean
-  let result = true
-    
-  for (let i = 1; i < array.length; i++) {
-    if (array[i-1] > array[i]) {
-      result = false
-    }
-  }
-
-  return result
-}
+const { checkSortedArray, createArray } = require('../../testbench/helper')
+const insertionSort = require('../insertionSort')
+const builtInSort = require('../builtinSort')
+const mergeSort = require('../mergeSort')
 
 describe('Check test logic', () => {
   // checking that the basic assumptions in our tests are correct:
@@ -59,9 +36,9 @@ describe('Check test logic', () => {
 describe('sort tests', () => {
   // tests with a realistic array
   let testArray
-  
+
   beforeEach(() => {
-    testArray = randomArray()
+    testArray = createArray(100)
   })
 
   test('test array is not sorted by default', () => {
